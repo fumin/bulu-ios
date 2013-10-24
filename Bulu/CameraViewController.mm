@@ -69,7 +69,7 @@
                 if ([[[Utils alloc] init] upload_to_s3:imageToSave underName:filename]) {
                     AppDelegate* d = (AppDelegate*)[[UIApplication sharedApplication] delegate];
                     if (d.messageSignalHandlerImpl) {
-                        NSString* remoteURL = [NSString stringWithFormat:@"http://s3.amazonaws.com/doodlescan-test/expires_in_days/7/bulu/%@.jpg", filename];
+                        NSString* remoteURL = [NSString stringWithFormat:@"http://d1a7rh4nd2ow65.cloudfront.net/expires_in_days/7/bulu/%@.jpg", filename];
                         NSString* username = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
                         const char* cusername = [username cStringUsingEncoding:[NSString defaultCStringEncoding]];
                         d.messageSignalHandlerImpl->SendBuluSignal(cusername, "image_url",

@@ -12,7 +12,7 @@
 #import "FullScreenPhotoViewController.h"
 #import "BuluUtils.h"
 
-@interface TimelineViewController () <UICollectionViewDataSource>
+@interface TimelineViewController () <UICollectionViewDataSource, UIGestureRecognizerDelegate>
 @property (nonatomic, strong) NSMutableArray* pendingData;
 @end
 
@@ -31,6 +31,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
     if (!self.data) {
         self.data = [NSMutableArray arrayWithCapacity:0];
     }
@@ -41,6 +42,11 @@
         NSDictionary* obj = self.pendingData[i];
         [self handleBuluSignal:obj[@"username"] type:obj[@"type"] data:obj[@"data"]];
     }
+    
+    UILongPressGestureRecognizer* longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressHandler:)];
+    [longPressGesture setDelegate:self];
+    [self.collectionView addGestureRecognizer:longPressGesture];
+    
     
     // Some testing data
     /*for (NSString* s in @[@"LeggyFrog.jpg", @"CuriousFrog.jpg", @"PeeringFrog.jpg"]) {
@@ -61,6 +67,15 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+{
+    if (self.collectionView.allowsMultipleSelection) {
+        return NO;
+    } else {
+        return YES;
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -94,7 +109,47 @@
     NSString* fileName = self.data[indexPath.item][@"data"];
     cell.img.image = [[[BuluUtils alloc] init] thumbnailFromFileName:fileName];
     cell.text.text = self.data[indexPath.item][@"username"];
+    
+    UIView *bgView = [[UIView alloc] init];
+    [bgView setBackgroundColor:[UIColor greenColor]];
+    cell.selectedBackgroundView = bgView;
     return cell;
+}
+
+- (void)longPressHandler:(UILongPressGestureRecognizer*)recognizer
+{
+    if (recognizer.state != UIGestureRecognizerStateBegan) {
+        return;
+    }
+    UINavigationController* navController = (UINavigationController*)[self parentViewController];
+    if (navController.navigationBarHidden) {
+        [navController setNavigationBarHidden:NO animated:NO];
+        self.collectionView.allowsMultipleSelection = YES;
+    } else {
+        [navController setNavigationBarHidden:YES animated:NO];
+        self.collectionView.allowsMultipleSelection = NO;
+    }
+}
+
+- (IBAction)deleteItems:(id)sender {
+    NSMutableIndexSet* successfullyDeleted = [[NSMutableIndexSet alloc] init];
+    NSMutableArray* successfullyDeletedIndexPaths = [NSMutableArray arrayWithCapacity:0];
+    
+    NSArray* indexPaths = [self.collectionView indexPathsForSelectedItems];
+    int len = [indexPaths count];
+    for (int i = 0; i != len; i++) {
+        NSIndexPath* indexPath = indexPaths[i];
+        NSString* fileName = self.data[indexPath.row][@"data"];
+        if ([[[BuluUtils alloc] init] deleteImageFromFileName:fileName]) {
+            [successfullyDeleted addIndex:indexPath.row];
+            [successfullyDeletedIndexPaths insertObject:indexPath atIndex:0];
+        }
+    }
+    
+    [self.collectionView performBatchUpdates:^{
+        [self.data removeObjectsAtIndexes:successfullyDeleted];
+        [self.collectionView deleteItemsAtIndexPaths:successfullyDeletedIndexPaths];
+    } completion:nil];
 }
 
 - (void)handleBuluSignal:(NSString*)username type:(NSString*)type data:(NSString*)data
@@ -118,9 +173,13 @@
                 if (imgData) {
                     UIImage* img = [UIImage imageWithData:imgData];
                     NSString* fileName = [[[BuluUtils alloc] init] saveImageAsThumbnailAndOriginal:img];
-                    [self.data insertObject:@{@"username": username, @"type": type, @"data": fileName} atIndex:0];
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0]]];
+                        // [self.data insertObject] must be in the same thread as [collectionView insertItems]
+                        // to avoid the exception NSInternalInconsistencyException
+                        [self.collectionView performBatchUpdates:^{
+                            [self.data insertObject:@{@"username": username, @"type": type, @"data": fileName} atIndex:0];
+                            [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0]]];
+                        } completion:nil];
                     });
                 }
             }

@@ -44,7 +44,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="100" height="124"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="EmH-pe-JgD">
+                                        <imageView userInteractionEnabled="NO" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="EmH-pe-JgD">
                                             <rect key="frame" x="0.0" y="0.0" width="100" height="104"/>
                                         </imageView>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GRA-sA-Nxe">
@@ -80,7 +80,13 @@
                             <outlet property="delegate" destination="QLo-g6-nuC" id="TPl-VM-cwl"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="JuO-aY-KX4"/>
+                    <navigationItem key="navigationItem" id="JuO-aY-KX4">
+                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="PpX-JU-d1k">
+                            <connections>
+                                <action selector="deleteItems:" destination="QLo-g6-nuC" id="qIv-s2-dGp"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DMk-WR-Xmq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
