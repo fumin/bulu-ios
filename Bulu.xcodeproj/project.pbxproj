@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1800281F16DCFC39004853FF /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1800281D16DCFC2B004853FF /* AssetsLibrary.framework */; };
 		1856A3231819615000AEBB10 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1856A3221819615000AEBB10 /* Settings.bundle */; };
+		1856A3251819A49800AEBB10 /* credentials.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1856A3241819A49800AEBB10 /* credentials.txt */; };
 		186C5E3816D3D9D400DBC2A9 /* ZoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 186C5E3716D3D9D400DBC2A9 /* ZoomViewController.m */; };
 		186C5E4416D3F0E900DBC2A9 /* ImageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 186C5E4116D3F0E900DBC2A9 /* ImageScrollView.m */; };
 		186C5E4716D40CF800DBC2A9 /* CuriousFrog.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 186C5E4616D40CF800DBC2A9 /* CuriousFrog.jpg */; };
@@ -68,6 +69,7 @@
 		1800281C16DA8694004853FF /* UIImage_ResizeData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIImage_ResizeData.h; sourceTree = "<group>"; };
 		1800281D16DCFC2B004853FF /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		1856A3221819615000AEBB10 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		1856A3241819A49800AEBB10 /* credentials.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = credentials.txt; sourceTree = "<group>"; };
 		186C5E3316D12A3E00DBC2A9 /* NSData_Base64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSData_Base64.h; sourceTree = "<group>"; };
 		186C5E3416D12B3600DBC2A9 /* NSData_HMAC_SHA1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSData_HMAC_SHA1.h; sourceTree = "<group>"; };
 		186C5E3516D130FA00DBC2A9 /* NSString_RandomStr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSString_RandomStr.h; sourceTree = "<group>"; };
@@ -259,6 +261,7 @@
 		18DD9AE816CE9605007499BA /* Bulu */ = {
 			isa = PBXGroup;
 			children = (
+				1856A3241819A49800AEBB10 /* credentials.txt */,
 				186C5E4816D4860C00DBC2A9 /* LeggyFrog.jpg */,
 				186C5E4916D4860D00DBC2A9 /* PeeringFrog.jpg */,
 				186C5E4616D40CF800DBC2A9 /* CuriousFrog.jpg */,
@@ -425,6 +428,7 @@
 				18DD9AF716CE9605007499BA /* Default@2x.png in Resources */,
 				18DD9AF916CE9605007499BA /* Default-568h@2x.png in Resources */,
 				18DD9AFC16CE9605007499BA /* MainStoryboard.storyboard in Resources */,
+				1856A3251819A49800AEBB10 /* credentials.txt in Resources */,
 				186C5E4716D40CF800DBC2A9 /* CuriousFrog.jpg in Resources */,
 				186C5E4A16D4860D00DBC2A9 /* LeggyFrog.jpg in Resources */,
 				1856A3231819615000AEBB10 /* Settings.bundle in Resources */,

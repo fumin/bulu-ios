@@ -17,4 +17,8 @@
 @property (nonatomic, strong) AJNInterfaceDescription *buluInterface;
 @property (nonatomic, assign) MessageSignalHandlerImpl* messageSignalHandlerImpl;
 
+@property (nonatomic, strong) NSString* s3Bucket;
+@property (nonatomic, strong) NSString* s3AccessKeyId;
+@property (nonatomic, strong) NSString* s3SecretAccessKey;
+
 @end

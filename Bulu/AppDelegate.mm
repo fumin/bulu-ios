@@ -17,6 +17,7 @@
 {
     // Override point for customization after application launch.
     [self customSetup];
+    [self readS3Credentials];
     return YES;
 }
 							
@@ -99,6 +100,19 @@
     // Pass the signal to TimelineViewController
     UINavigationController* navController = [self.window.rootViewController childViewControllers][1];
     [[navController childViewControllers][0] handleBuluSignal:username type:type data:data];
+}
+
+- (void) readS3Credentials
+{
+    NSString* path = [[NSBundle mainBundle] pathForResource:@"credentials" ofType:@"txt"];
+    NSString* fileContents = [NSString stringWithContentsOfFile:path
+                                                       encoding:NSUTF8StringEncoding
+                                                          error:nil];
+    NSCharacterSet *newlineCharSet = [NSCharacterSet newlineCharacterSet];
+    NSArray *lines = [fileContents componentsSeparatedByCharactersInSet:newlineCharSet];
+    self.s3Bucket = lines[0];
+    self.s3AccessKeyId = lines[1];
+    self.s3SecretAccessKey = lines[2];
 }
 
 @end

@@ -6,6 +6,7 @@
 //  Copyright (c) 2013年 cardinalblue. All rights reserved.
 //
 
+#import "AppDelegate.h"
 #import "Utils.h"
 
 #import "NSData_Base64.h"
@@ -33,9 +34,10 @@
     UIGraphicsEndImageContext();
     NSData* data = UIImageJPEGRepresentation(newImg, 0.5);
     
-    NSString* bucket_name = @"abcd";
-    NSString* access_key_id = @"abcd";
-    NSString* secret_access_key = @"abcd";
+    AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    NSString* bucket_name = appDelegate.s3Bucket;
+    NSString* access_key_id = appDelegate.s3AccessKeyId;
+    NSString* secret_access_key = appDelegate.s3SecretAccessKey;
     
     // Prepare dateString
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
