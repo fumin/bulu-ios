@@ -32,8 +32,15 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    // read past photos from disk
+    NSString* docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSError* err;
+    NSArray* imageNames = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:docDir error:&err];
     if (!self.data) {
-        self.data = [NSMutableArray arrayWithCapacity:0];
+        self.data = [[NSMutableArray alloc] init];
+        for (NSString* name in imageNames) {
+            [self.data insertObject:@{@"username": @"awaw", @"type": @"image_url", @"data": name} atIndex:0];
+        }
     }
     
     // Signals in self.pendingData are the ones that we received even before our view is loaded.
@@ -96,6 +103,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
+    NSLog(@"self.data count: %d", [self.data count]);
     return [self.data count];
 }
 
@@ -176,9 +184,13 @@
                     dispatch_async(dispatch_get_main_queue(), ^{
                         // [self.data insertObject] must be in the same thread as [collectionView insertItems]
                         // to avoid the exception NSInternalInconsistencyException
+                        NSLog(@"starting insert: %d", [self.data count]);
                         [self.collectionView performBatchUpdates:^{
+                            NSLog(@"starting insert 0000000: %d", [self.data count]);
                             [self.data insertObject:@{@"username": username, @"type": type, @"data": fileName} atIndex:0];
+                            NSLog(@"starting insert 111111111: %d", [self.data count]);
                             [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0]]];
+                            NSLog(@"starting insert 22222222: %d", [self.data count]);
                         } completion:nil];
                     });
                 }

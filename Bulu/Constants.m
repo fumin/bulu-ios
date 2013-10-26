@@ -13,4 +13,3 @@ NSString * const kAppName = @"bulu";
 NSString * const kServicePath = @"/buluService";
 NSString * const kServiceName = @"com.cardinalblue.bulu.";
 NSString * const kInterfaceName = @"com.cardinalblue.bulu";
-NSString * const kMethodName = @"Chat";

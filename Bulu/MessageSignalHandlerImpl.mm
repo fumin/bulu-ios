@@ -54,7 +54,7 @@ void MessageSignalHandlerImpl::UnregisterSignalHandler(ajn::BusAttachment &bus)
         const ajn::InterfaceDescription* chatIntf = bus.GetInterface([kInterfaceName UTF8String]);
         
         /* Store the Chat signal member away so it can be quickly looked up */
-        buluSignalMember = chatIntf->GetMember("Chat");
+        buluSignalMember = chatIntf->GetMember("bulu");
         assert(buluSignalMember);
     }
     /* Register signal handler */

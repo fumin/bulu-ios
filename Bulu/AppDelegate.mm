@@ -78,19 +78,6 @@
     
     status = [self.busAttachment addMatchRule:@"sessionless='t'"];
     if (status != ER_OK) {NSLog(@"ERROR: Unable to add match rule. %@", [AJNStatus descriptionForStatusCode:status]);}
-    
-    // read past photos from disk
-    NSString* docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSError* err;
-    NSArray* imageNames = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:docDir error:&err];
-    UINavigationController* navController = [self.window.rootViewController childViewControllers][1];
-    TimelineViewController* vc = [navController childViewControllers][0];
-    if (!vc.data) {
-        vc.data = [[NSMutableArray alloc] init];
-    }
-    for (NSString* name in imageNames) {
-        [vc.data insertObject:@{@"username": @"awaw", @"type": @"image_url", @"data": name} atIndex:0];
-    }
 }
 
 - (void)buluMessageReceived:(NSString*)username type:(NSString*)type data:(NSString *)data from:(NSString*)sender onObjectPath:(NSString *)path forSession:(AJNSessionId)sessionId
